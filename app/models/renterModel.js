@@ -9,12 +9,15 @@ const renterSchema = new Schema(
       username: {
         type: String,
         required: true,
-        unique: true,
       },
       nationalId: {
         type: String,
         required: true,
-        unique: true,
+      },
+      role: {
+        type: String,
+        enum: ['admin', 'car-rental-company', 'end-user'],
+        default: 'end-user',
       },
       password: {
         type: String,
@@ -39,7 +42,6 @@ const renterSchema = new Schema(
       email: {
         type: String,
         required: true,
-        unique: true,
       },
     },
     {

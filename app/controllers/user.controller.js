@@ -2,6 +2,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import BaseController from './base.controller';
 import User from '../models/renterModel';
+import Company from '../models/renatalCompanyModel';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import Constants from '../config/constants';
@@ -20,6 +21,9 @@ class UsersController extends BaseController {
 	  'phoneNumber',
 	  'isBlackListed',
 	  'email',
+	  'role',
+	  'registrationDate',
+	  'endOfRegistrationDate',
 	];
 
 	register = async (req, res, next) => {
@@ -42,7 +46,17 @@ class UsersController extends BaseController {
 	          ...params,
 	        },
 	    );
-	        await newUser.save();
+	    await newUser.save();
+
+	      const saveCompanyDetail = new Company(
+	          {
+					  ...params,
+					  userId: newUser._id,
+	          },
+		  );
+	      await saveCompanyDetail.save();
+
+
 	    jwt.sign(params, Constants.security.sessionSecret, { expiresIn: Constants.security.sessionExpiration },
 	        (err, token) => {
 			  if (err) throw err;

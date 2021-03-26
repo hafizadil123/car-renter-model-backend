@@ -1,47 +1,19 @@
-import Car from "./carModel.js";
-import Renter from "./renterModel.js";
-import Rent from "./rentModel.js";
-import Ticket from "./ticketModel.js";
-
-import mongoose from 'mongoose'
-var Schema = mongoose.Schema;
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
 const rentalCompanySchema = new Schema(
-  {
-    companyName:{
-      type : String,
-      required : true,
-      unique : true
-    } ,
-    companyId: {
-      type : String,
-      required : true,
-      unique : true
+    {
+      userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'renter',
+      },
+      registrationDate: Date,
+      endOfRegistrationDate: Date,
     },
-    
-    email : {
-      type : String,
-      required : true,
-      unique : true
-    },
-    password: {
-      type : String,
-      required : true
-    },
-    phoneNumber : {
-      type : String,
-      required : true
-    },
-    registrationDate: Date,
-    endOfRegistrationDate: Date,
-    // rents : [Rent],
-    // renters : [Renter],
-    // tickets : [Ticket],
-    // cars : [Car]
-  },
-  {
-    timestamps: true
-  });
+    {
+      timestamps: true,
+    });
 
-const RentalCompany = mongoose.model('RentalCompany',rentalCompanySchema)
+const RentalCompany = mongoose.model('RentalCompany', rentalCompanySchema);
 export default RentalCompany;
